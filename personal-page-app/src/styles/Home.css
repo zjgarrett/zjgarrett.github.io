@@ -1,0 +1,31 @@
+.LoadingBar {
+  width: 60%;
+  height: 5px;
+  margin: auto;
+  background: linear-gradient(to right, #ffffff,#ffffff, #000000);
+  background-size: 150% 150%;
+  animation: LoadingAnimation 2s linear infinite;
+  border-radius: 5px;
+  border-color: #cfcfcf;
+}
+
+@keyframes LoadingAnimation {
+  0%{
+    background-position: 250%;
+  }
+  8%{
+    background-position: 240%;
+  }
+  31%{
+    background-position: 165%;
+  }
+  54%{
+    background-position: 90%;
+  }
+  87%{
+    background-position: 15%;
+  }
+  100%{
+    background-position: -50%;
+  }
+}
