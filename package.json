@@ -1,10 +1,3 @@
 {
-  "homepage": "https://zjgarrett.github.io/",
-  "scripts": {
-    "predeploy": "cd ./personal-page-app/ && npm run build",
-    "deploy": "gh-pages -d ./personal-page-app/build -b main -m 'Building and deploying React'"
-  },
-  "devDependencies": {
-    "gh-pages": "^6.1.1"
-  }
+
 }
