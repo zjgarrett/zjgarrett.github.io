@@ -1,19 +1,18 @@
-import React, {useEffect, useState} from "react";
-
-import {disableScroll, enableScroll} from "../utils/DisableScrolling"
+import React, { useEffect } from "react";
 
 import "../styles/Home.css";
 import "../styles/App.css";
 
-const SCROLL_DELAY_MS = 1000;
-const SCROLL_TIME_MS = 100;
+const SCROLL_DELAY_MS = 200;
+const SCROLL_TIME_MS = 50;
 
 function Home(props) {
-  const [scrollLocations, setScrollLocations] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState(0);
-  const [lastPostion, setLastPosition] = useState(0);
-  const [timeLastScrolled, setTimeLastScrolled] = useState(Date.now());
-  const [animationId, setAnimationId] = useState(null);
+  let scrollLocations = [];
+  let currentLocation = 0;
+  let lastPosition = 0;
+  let timeLastScrolled = Date.now();
+  let animationId = null;
+  let throttel = false;
 
   function moveTo(location) {
     const root = document.getElementById("root");
@@ -23,19 +22,20 @@ function Home(props) {
 
     const targetPos = Math.floor(location.offsetTop);
     let pos = Math.floor(root.scrollTop);
-    
+
     // Calculate scroll distance for a delay of 1ms and SCROLL_TIME_MS time to reach destination
     const distance = Math.abs(targetPos - pos) / SCROLL_TIME_MS;
-    console.log(distance);
 
     id = setInterval(frame, 1);
-    setAnimationId(id);
+    animationId = id;
     function frame() {
-      if ((Math.floor(pos) === targetPos) ||
-          (Math.floor(pos) + distance > targetPos && Math.floor(pos) < targetPos) ||
-          (Math.floor(pos) - distance < targetPos && Math.floor(pos) > targetPos)) {
+      if (
+        Math.floor(pos) === targetPos ||
+        (Math.floor(pos) + distance > targetPos &&
+          Math.floor(pos) < targetPos) ||
+        (Math.floor(pos) - distance < targetPos && Math.floor(pos) > targetPos)
+      ) {
         clearInterval(id);
-        enableScroll();
       } else {
         if (pos < targetPos) pos += distance;
         else pos -= distance;
@@ -49,53 +49,124 @@ function Home(props) {
     const root = document.getElementById("root");
     const locations = document.getElementsByClassName("ScrollLocation");
 
-    let array = [root]
+    let array = [root];
     for (let item of locations) array.push(item);
 
-    setScrollLocations(array)
+    scrollLocations = array;
   }, []); // Runs once after render
 
-  const handleScroll = () => {
+  const handleScroll = (delta) => {
     const root = document.getElementById("root");
     const curPosition = root.scrollTop;
     const timeSinceLastScroll = Math.abs(Date.now() - timeLastScrolled);
 
-    if (timeSinceLastScroll < SCROLL_DELAY_MS) return;
-    console.log("uhhh")
-    setTimeLastScrolled(Date.now());
-    if (curPosition > lastPostion) {
+    // Dont scroll if its too early to scroll again, then unblock after time
+    if (timeSinceLastScroll < SCROLL_DELAY_MS) {
+      setTimeout(() => {
+        throttel = false;
+      }, timeSinceLastScroll);
+      return;
+    }
+
+    throttel = false;
+    timeLastScrolled = Date.now();
+
+    // If scrolling direction is determined, and there is more to scroll in that direction
+    // then scroll to the new location and update
+    if (delta > 0) {
       // Scrolling down
       if (currentLocation < scrollLocations.length - 1) {
-        disableScroll();
         moveTo(scrollLocations[currentLocation + 1]);
-        setCurrentLocation(currentLocation + 1);
+        currentLocation = currentLocation + 1;
       }
-    } else if (curPosition < lastPostion) {
+    } else if (delta < 0) {
       // Scrolling up
       if (currentLocation > 0) {
-        disableScroll();
         moveTo(scrollLocations[currentLocation - 1]);
-        setCurrentLocation(currentLocation - 1);
+        currentLocation = currentLocation - 1;
       }
     }
 
-    setLastPosition(curPosition);
+    lastPosition = curPosition;
   };
 
+  // Code largely modeled on: https://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
+  // left: 37, up: 38, right: 39, down: 40,
+  // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+  const keys = { 38: 1, 33: 1, 36: 1, 40: 1, 32: 1, 34: 1, 35: 1 };
+  const upKeys = { 38: 1, 33: 1, 36: 1 };
+  const downKeys = { 40: 1, 32: 1, 34: 1, 35: 1 };
+
+  function preventDefault(e) {
+    if (!throttel) {
+      // event throtteling
+      throttel = true;
+
+      // Determine scroll direction, attempt to scroll
+      var delta = 0;
+      if (e.wheelDelta) delta = -e.wheelDelta;
+      else if (e.detail) delta = e.detail;
+      else if (e.type === "keydown") {
+        if (upKeys[e.keyCode]) delta = -5;
+        else delta = 5;
+      }
+      handleScroll(delta);
+    }
+
+    e.preventDefault();
+  }
+
+  function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+      preventDefault(e);
+      return false;
+    }
+  }
+
+  // modern Chrome requires { passive: false } when adding event
+  var supportsPassive = false;
+  try {
+    window.addEventListener(
+      "test",
+      null,
+      Object.defineProperty({}, "passive", {
+        get: function () {
+          supportsPassive = true;
+        },
+      })
+    );
+  } catch (e) {}
+
+  var wheelOpt = supportsPassive ? { passive: false } : false;
+  var wheelEvent =
+    "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
+
+  // Disables various methods of scrolling
+  function specialScroll() {
+    window.addEventListener("DOMMouseScroll", preventDefault, false); // older FF
+    window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
+    window.addEventListener("touchmove", preventDefault, wheelOpt); // mobile
+    window.addEventListener("keydown", preventDefaultForScrollKeys, false);
+  }
+
+  // Cleans up EventListeners
+  function removeSpecialScroll() {
+    window.removeEventListener("DOMMouseScroll", preventDefault, false);
+    window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.removeEventListener("touchmove", preventDefault, wheelOpt);
+    window.removeEventListener("keydown", preventDefaultForScrollKeys, false);
+  }
 
   // Scroll event listener
   useEffect(() => {
-    const root = document.getElementById("root");
+    // Scrolls directly to set elements
+    specialScroll();
 
-    // Call updateBackground on scroll
-    root.addEventListener("scroll", handleScroll);
-  
     // Cleanup function
     return () => {
-      root.removeEventListener("scroll", handleScroll);
+      removeSpecialScroll();
     };
-  }, [scrollLocations, currentLocation, lastPostion, timeLastScrolled, animationId]);
-  
+  }, []);
 
   return (
     <div className="Center">
@@ -115,4 +186,4 @@ function Home(props) {
   );
 }
 
-export default Home
+export default Home;
