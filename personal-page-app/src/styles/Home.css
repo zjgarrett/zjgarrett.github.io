@@ -9,6 +9,16 @@
   border-color: #cfcfcf;
 }
 
+.ScrollLocation {
+  display: flex;
+  height: 80vh;
+  width: 100%;
+}
+
+.ScrollLocation>* {
+  margin: auto;
+}
+
 @keyframes LoadingAnimation {
   0%{
     background-position: 250%;
