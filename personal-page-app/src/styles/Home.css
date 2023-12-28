@@ -2,7 +2,7 @@
   width: 60%;
   height: 5px;
   margin: auto;
-  background: linear-gradient(to right, #ffffff,#ffffff, #000000);
+  background: linear-gradient(to right, #ffffff, #ffffff, #000000);
   background-size: 150% 150%;
   animation: LoadingAnimation 2s linear infinite;
   border-radius: 5px;
@@ -15,27 +15,28 @@
   width: 100%;
 }
 
-.ScrollLocation>* {
-  margin: auto;
+.ScrollLocation > * {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @keyframes LoadingAnimation {
-  0%{
+  0% {
     background-position: 250%;
   }
-  8%{
+  8% {
     background-position: 240%;
   }
-  31%{
+  31% {
     background-position: 165%;
   }
-  54%{
+  54% {
     background-position: 90%;
   }
-  87%{
+  87% {
     background-position: 15%;
   }
-  100%{
+  100% {
     background-position: -50%;
   }
 }

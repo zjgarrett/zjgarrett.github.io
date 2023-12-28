@@ -1,0 +1,21 @@
+.CardHolder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.CardScroller {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.Card {
+  position: absolute;
+  margin: auto;
+  background-color: grey;
+  border: 5px solid red;
+  width: 300px;
+  height: 300px;
+}

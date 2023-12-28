@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 
+import Card from "./Card";
+
 import "../styles/Home.css";
 import "../styles/App.css";
+import CardHolder from "./CardHolder";
 
 const SCROLL_DELAY_MS = 200;
 const SCROLL_TIME_MS = 50;
@@ -177,7 +180,17 @@ function Home(props) {
         <p>First place to scroll to</p>
       </div>
       <div className="ScrollLocation">
-        <p>Second place to scroll to</p>
+        <CardHolder
+          title={"Second"}
+          description={"The second CardHolder we can scroll to!"}
+          cards={[
+            { text: "first card" },
+            { text: "second card" },
+            { text: "third card" },
+            { text: "fourth card" },
+            { text: "last card" },
+          ]}
+        />
       </div>
       <div className="ScrollLocation">
         <p>Last place to scroll to</p>
