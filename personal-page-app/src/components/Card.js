@@ -4,19 +4,24 @@ import { useWindowDimensions } from "react-native";
 import "../styles/Card.css";
 
 function Card({ xPos, yPos, zPos, text }) {
-  let cardRef = useRef(null);
+  const cardWidth = getComputedStyle(document.documentElement)
+    .getPropertyValue("--card-width")
+    .replace(/[^0-9]/gi, "");
   const { height, width } = useWindowDimensions();
-  const [style, setStyle] = useState({});
+  const scrollerWidth =
+    (getComputedStyle(document.documentElement)
+      .getPropertyValue("--main-content-width")
+      .replace(/[^0-9]/gi, "") /
+      100) *
+    width;
+  const useableWidth = scrollerWidth / 2 - cardWidth / 2;
+  let style = {};
 
-  useEffect(() => {
     function calculateDimensions() {
       let scale = 1 - 0.05 * Math.floor(Math.abs(zPos / 2));
     if (xPos < 50) {
       let pos = xPos;
-      if (pos != 0) {
-        let centerCardWidth = cardRef.current.clientWidth / 2;
-        let scrollerWidth = 0.45 * width;
-        let useableWidth = scrollerWidth - centerCardWidth;
+      if (pos !== 0) {
         pos = useableWidth * (pos / 50);
       }
         return {
@@ -27,10 +32,7 @@ function Card({ xPos, yPos, zPos, text }) {
         };
     } else if (xPos > 50) {
       let pos = 100 - xPos;
-      if (pos != 0) {
-        let centerCardWidth = cardRef.current.clientWidth / 2;
-        let scrollerWidth = 0.45 * width;
-        let useableWidth = scrollerWidth - centerCardWidth;
+      if (pos !== 0) {
         pos = useableWidth * (pos / 50);
       }
         return {
@@ -51,16 +53,13 @@ function Card({ xPos, yPos, zPos, text }) {
 
     const newStyle = calculateDimensions();
     if (Object.keys(style).length === 0) {
-      setStyle(newStyle);
+    style = newStyle;
     } else {
-      setStyle(newStyle);
+    style = newStyle;
     }
-  }, [xPos, yPos, zPos, width]);
-
-  useEffect(() => {});
 
   return (
-    <div className="Card" style={style} ref={cardRef}>
+    <div className="Card" style={style}>
       <p>{text}</p>
     </div>
   );

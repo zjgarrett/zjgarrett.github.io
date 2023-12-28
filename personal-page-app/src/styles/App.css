@@ -1,3 +1,7 @@
+:root {
+  --main-content-width: 90%;
+}
+
 html,
 body {
   max-width: 100%;
@@ -12,7 +16,7 @@ body {
 }
 
 #container {
-  max-width: 90%;
+  max-width: var(--main-content-width);
   margin: auto;
   z-index: 0;
   height: 300vh;
