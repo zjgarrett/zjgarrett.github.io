@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 
-import Card from "./Card";
-
 import "../styles/Home.css";
 import "../styles/App.css";
 import CardHolder from "./CardHolder";
 
+import CONTENT from "../HomeContent.json";
+import Card from "./Card";
 const SCROLL_DELAY_MS = 200;
 const SCROLL_TIME_MS = 50;
+
+console.log(CONTENT);
 
 function Home(props) {
   let scrollLocations = [];
@@ -171,14 +173,24 @@ function Home(props) {
     };
   }, []);
 
-  return (
-    <div className="Center">
-      <p>This page is still WIP, comeback soon!</p>
-      <p>Meanwhile, please be pleasantly distracted by this animated bar.</p>
-      <div className="LoadingBar"></div>
+  function getScrollLocations() {
+    return CONTENT.scrollLocations.map((location) => (
+      <div className="ScrollLocation">
+        <CardHolder
+          title={location.title}
+          description={location.description}
+          cards={location.cards.map((data) => ({
+            text: data.title,
+            blank: null,
+          }))}
+        />
+      </div>
+    ));
+
+    return [
       <div className="ScrollLocation">
         <p>First place to scroll to</p>
-      </div>
+      </div>,
       <div className="ScrollLocation">
         <CardHolder
           title={"Second"}
@@ -191,10 +203,18 @@ function Home(props) {
             { text: "last card" },
           ]}
         />
-      </div>
+      </div>,
       <div className="ScrollLocation">
         <p>Last place to scroll to</p>
-      </div>
+      </div>,
+    ];
+  }
+
+  return (
+    <div className="Center">
+      <p>{CONTENT.mainDescription}</p>
+      <div className="LoadingBar"></div>
+      {getScrollLocations()}
     </div>
   );
 }

@@ -1,0 +1,57 @@
+{
+  "title": "Zachary Garrett",
+  "mainDescription": "This page is still WIP, comeback soon! In the meantime, please be pleasantly distracted by this animated bar.",
+  "scrollLocations": [
+    {
+      "type": "CardHolder",
+      "title": "Work Experience",
+      "description": "Recent, relevant work experience.",
+      "cards": [
+        {
+          "type": "JobCard",
+          "urls": [],
+          "company": "LG Electronics",
+          "title": "Development Engineering Intern",
+          "description": "INSERT JOB DESCRIPTION HERE",
+          "skill": "INSERT RELEVANT SKILLS HERE"
+        },
+        {
+          "type": "JobCard",
+          "urls": [],
+          "company": "Michigan State Univeristy",
+          "title": "Undergraduate Learning Assistant",
+          "description": "INSERT JOB DESCRIPTION HERE",
+          "skill": "INSERT RELEVANT SKILLS HERE"
+        }
+      ]
+    },
+    {
+      "type": "CardHolder",
+      "title": "Projects",
+      "description": "Recent, relevant projects.",
+      "cards": [
+        {
+          "type": "ProjectCard",
+          "urls": [],
+          "title": "PugBot",
+          "description": "INSERT PROJECT DESCRIPTION HERE",
+          "skill": "INSERT RELEVANT SKILLS HERE"
+        },
+        {
+          "type": "ProjectCard",
+          "urls": [],
+          "title": "Task Tracking App",
+          "description": "INSERT PROJECT DESCRIPTION HERE",
+          "skill": "INSERT RELEVANT SKILLS HERE"
+        },
+        {
+          "type": "ProjectCard",
+          "urls": [],
+          "title": "This Web App!",
+          "description": "INSERT PROJECT DESCRIPTION HERE",
+          "skill": "INSERT RELEVANT SKILLS HERE"
+        }
+      ]
+    }
+  ]
+}

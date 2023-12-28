@@ -9,6 +9,8 @@ function Card({ xPos, yPos, zPos, text }) {
   const [style, setStyle] = useState({});
 
   useEffect(() => {
+    function calculateDimensions() {
+      let scale = 1 - 0.05 * Math.floor(Math.abs(zPos / 2));
     if (xPos < 50) {
       let pos = xPos;
       if (pos != 0) {
@@ -17,11 +19,12 @@ function Card({ xPos, yPos, zPos, text }) {
         let useableWidth = scrollerWidth - centerCardWidth;
         pos = useableWidth * (pos / 50);
       }
-      setStyle({
+        return {
         left: pos.toString() + "px",
         top: yPos.toString() + "px",
         zIndex: zPos.toString(),
-      });
+          transform: `scale(${scale},${scale})`,
+        };
     } else if (xPos > 50) {
       let pos = 100 - xPos;
       if (pos != 0) {
@@ -30,20 +33,31 @@ function Card({ xPos, yPos, zPos, text }) {
         let useableWidth = scrollerWidth - centerCardWidth;
         pos = useableWidth * (pos / 50);
       }
-      setStyle({
+        return {
         right: pos.toString() + "px",
         top: yPos.toString() + "px",
         zIndex: zPos.toString(),
-      });
+          transform: `scale(${scale},${scale})`,
+        };
     } else {
-      setStyle({
+        return {
         left: 0,
         right: 0,
         top: yPos.toString() + "px",
         zIndex: zPos.toString(),
-      });
+        };
+      }
+    }
+
+    const newStyle = calculateDimensions();
+    if (Object.keys(style).length === 0) {
+      setStyle(newStyle);
+    } else {
+      setStyle(newStyle);
     }
   }, [xPos, yPos, zPos, width]);
+
+  useEffect(() => {});
 
   return (
     <div className="Card" style={style} ref={cardRef}>
