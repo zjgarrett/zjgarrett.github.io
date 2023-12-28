@@ -6,35 +6,30 @@ import "../styles/Card.css";
 
 function CardHolder({ title, description, cards }) {
   const [currentFocus, setFocus] = useState(0); // Index of the card that should be focused, on top
-  const [cardComps, setCardComps] = useState([]);
-  const { height, width } = useWindowDimensions();
+  let cardComps = [];
 
-  useEffect(() => {
-    function buildCards() {
-      const useableWidth = width;
-      const xLeftStepSize = 50 / currentFocus;
-      const xRightStepSize = 50 / (cards.length - currentFocus - 1);
-      const result = [];
-      for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
-        let x = 50;
-        let y = 0;
-        let z = 0;
-        if (i < currentFocus) {
-          x = xLeftStepSize * i;
-          y = (currentFocus - i) * 10;
-          z = -2 * (currentFocus - i) - 1;
-        } else if (i > currentFocus) {
-          x = 50 + xRightStepSize * (i - currentFocus);
-          z = -2 * (i - currentFocus);
-          y = (i - currentFocus) * 10;
-        }
-        result.push(<Card xPos={x} yPos={y} zPos={z} text={card.text} />);
+  function buildCards() {
+    const xLeftStepSize = 50 / currentFocus;
+    const xRightStepSize = 50 / (cards.length - currentFocus - 1);
+    const result = [];
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      let x = 50;
+      let y = 0;
+      let z = 0;
+      if (i < currentFocus) {
+        x = xLeftStepSize * i;
+        y = (currentFocus - i) * 10;
+        z = -2 * (currentFocus - i) - 1;
+      } else if (i > currentFocus) {
+        x = 50 + xRightStepSize * (i - currentFocus);
+        z = -2 * (i - currentFocus);
+        y = (i - currentFocus) * 10;
       }
-      return result;
+      result.push(<Card xPos={x} yPos={y} zPos={z} text={card.text} />);
     }
-    setCardComps(buildCards());
-  }, [currentFocus]);
+    return result;
+  }
 
   return (
     <div className="CardHolder">
@@ -64,7 +59,7 @@ function CardHolder({ title, description, cards }) {
           Move focus right
         </button>
       </div>
-      <div className="CardScroller">{cardComps}</div>
+      <div className="CardScroller">{buildCards()}</div>
     </div>
   );
 }
