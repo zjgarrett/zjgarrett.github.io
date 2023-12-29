@@ -18,12 +18,13 @@
 }
 
 .Card {
-  transition-property: left top z-index transform;
+  transition-property: left top z-index transform filter;
   transition-duration: var(--card-transition-time);
   position: absolute;
   margin: auto;
   background-color: grey;
-  border: 5px solid red;
+  border: 2px solid red;
+  border-radius: 10px;
   width: var(--card-width);
   height: var(--card-height);
 }

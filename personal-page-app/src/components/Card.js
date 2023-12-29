@@ -17,11 +17,13 @@ function Card({ xPos, yPos, zPos, text }) {
 
   function calculateDimensions() {
     const scale = 1 - 0.05 * Math.floor(Math.abs(zPos / 2));
+    const blur = 2 * Math.floor(Math.abs(zPos / 2));
     const pos = (xPos / 100) * (scrollerWidth - cardWidth);
     return {
       left: pos.toString() + "px",
       top: yPos.toString() + "px",
       zIndex: zPos.toString(),
+      filter: `blur(${blur}px)`,
       transform: `scale(${scale},${scale})`,
     };
   }
