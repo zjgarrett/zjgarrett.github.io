@@ -3,7 +3,7 @@ import { useWindowDimensions } from "react-native";
 
 import "../styles/Card.css";
 
-function Card({ xPos, yPos, zPos, text }) {
+export function Card({ xPos, yPos, zPos, innerComp }) {
   const cardWidth = getComputedStyle(document.documentElement)
     .getPropertyValue("--card-width")
     .replace(/[^0-9]/gi, "");
@@ -32,9 +32,26 @@ function Card({ xPos, yPos, zPos, text }) {
 
   return (
     <div className="Card" style={style}>
-      <p>{text}</p>
+      {innerComp}
     </div>
   );
 }
 
-export default Card;
+export function JobCard({ company, title, description, skills, urls }) {
+  return (
+    <div>
+      <h2>{company}</h2>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </div>
+  );
+}
+
+export function ProjectCard({ title, description, skills, urls }) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  );
+}

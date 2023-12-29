@@ -174,10 +174,7 @@ function Home(props) {
           key={"Holder-" + index.toString()}
           title={location.title}
           description={location.description}
-          cards={location.cards.map((data) => ({
-            text: data.title,
-            blank: null,
-          }))}
+          cards={location.cards}
         />
       </div>
     ));

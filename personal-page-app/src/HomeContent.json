@@ -13,7 +13,7 @@
           "company": "LG Electronics",
           "title": "Development Engineering Intern",
           "description": "INSERT JOB DESCRIPTION HERE",
-          "skill": "INSERT RELEVANT SKILLS HERE"
+          "skills": []
         },
         {
           "type": "JobCard",
@@ -21,7 +21,7 @@
           "company": "Michigan State Univeristy",
           "title": "Undergraduate Learning Assistant",
           "description": "INSERT JOB DESCRIPTION HERE",
-          "skill": "INSERT RELEVANT SKILLS HERE"
+          "skills": []
         }
       ]
     },
@@ -35,21 +35,21 @@
           "urls": [],
           "title": "PugBot",
           "description": "INSERT PROJECT DESCRIPTION HERE",
-          "skill": "INSERT RELEVANT SKILLS HERE"
+          "skills": []
         },
         {
           "type": "ProjectCard",
           "urls": [],
           "title": "Task Tracking App",
           "description": "INSERT PROJECT DESCRIPTION HERE",
-          "skill": "INSERT RELEVANT SKILLS HERE"
+          "skills": []
         },
         {
           "type": "ProjectCard",
           "urls": [],
           "title": "This Web App!",
           "description": "INSERT PROJECT DESCRIPTION HERE",
-          "skill": "INSERT RELEVANT SKILLS HERE"
+          "skills": []
         }
       ]
     }

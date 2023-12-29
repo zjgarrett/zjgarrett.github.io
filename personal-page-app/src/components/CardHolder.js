@@ -1,4 +1,4 @@
-import Card from "./Card";
+import { Card, JobCard, ProjectCard } from "./Card";
 import React, { useState } from "react";
 
 import "../styles/Card.css";
@@ -24,13 +24,34 @@ function CardHolder({ title, description, cards }) {
         z = -2 * (i - currentFocus);
         y = (i - currentFocus) * 10;
       }
+      let innerComp;
+      if (card.type === "JobCard") {
+        innerComp = (
+          <JobCard
+            company={card.company}
+            title={card.title}
+            description={card.description}
+            skills={card.skills}
+            urls={card.urls}
+          />
+        );
+      } else if (card.type === "ProjectCard") {
+        innerComp = (
+          <ProjectCard
+            title={card.title}
+            description={card.description}
+            skills={card.skills}
+            urls={card.urls}
+          />
+        );
+      }
       result.push(
         <Card
           key={"Card-" + i.toString()}
           xPos={x}
           yPos={y}
           zPos={z}
-          text={card.text}
+          innerComp={innerComp}
         />
       );
     }
