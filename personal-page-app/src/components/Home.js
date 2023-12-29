@@ -5,7 +5,6 @@ import "../styles/App.css";
 import CardHolder from "./CardHolder";
 
 import CONTENT from "../HomeContent.json";
-import Card from "./Card";
 const SCROLL_DELAY_MS = 200;
 const SCROLL_TIME_MS = 50;
 
@@ -14,7 +13,6 @@ console.log(CONTENT);
 function Home(props) {
   let scrollLocations = [];
   let currentLocation = 0;
-  let lastPosition = 0;
   let timeLastScrolled = Date.now();
   let animationId = null;
   let throttel = false;
@@ -61,8 +59,6 @@ function Home(props) {
   }, []); // Runs once after render
 
   const handleScroll = (delta) => {
-    const root = document.getElementById("root");
-    const curPosition = root.scrollTop;
     const timeSinceLastScroll = Math.abs(Date.now() - timeLastScrolled);
 
     // Dont scroll if its too early to scroll again, then unblock after time
@@ -91,8 +87,6 @@ function Home(props) {
         currentLocation = currentLocation - 1;
       }
     }
-
-    lastPosition = curPosition;
   };
 
   // Code largely modeled on: https://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
@@ -100,7 +94,7 @@ function Home(props) {
   // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
   const keys = { 38: 1, 33: 1, 36: 1, 40: 1, 32: 1, 34: 1, 35: 1 };
   const upKeys = { 38: 1, 33: 1, 36: 1 };
-  const downKeys = { 40: 1, 32: 1, 34: 1, 35: 1 };
+  // const downKeys = { 40: 1, 32: 1, 34: 1, 35: 1 };
 
   function preventDefault(e) {
     if (!throttel) {
@@ -135,7 +129,7 @@ function Home(props) {
       "test",
       null,
       Object.defineProperty({}, "passive", {
-        get: function () {
+        get: () => {
           supportsPassive = true;
         },
       })
@@ -171,12 +165,13 @@ function Home(props) {
     return () => {
       removeSpecialScroll();
     };
-  }, []);
+  });
 
   function getScrollLocations() {
-    return CONTENT.scrollLocations.map((location) => (
+    return CONTENT.scrollLocations.map((location, index) => (
       <div className="ScrollLocation">
         <CardHolder
+          key={"Holder-" + index.toString()}
           title={location.title}
           description={location.description}
           cards={location.cards.map((data) => ({
@@ -186,28 +181,6 @@ function Home(props) {
         />
       </div>
     ));
-
-    return [
-      <div className="ScrollLocation">
-        <p>First place to scroll to</p>
-      </div>,
-      <div className="ScrollLocation">
-        <CardHolder
-          title={"Second"}
-          description={"The second CardHolder we can scroll to!"}
-          cards={[
-            { text: "first card" },
-            { text: "second card" },
-            { text: "third card" },
-            { text: "fourth card" },
-            { text: "last card" },
-          ]}
-        />
-      </div>,
-      <div className="ScrollLocation">
-        <p>Last place to scroll to</p>
-      </div>,
-    ];
   }
 
   return (

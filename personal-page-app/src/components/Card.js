@@ -7,7 +7,7 @@ function Card({ xPos, yPos, zPos, text }) {
   const cardWidth = getComputedStyle(document.documentElement)
     .getPropertyValue("--card-width")
     .replace(/[^0-9]/gi, "");
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const scrollerWidth =
     (getComputedStyle(document.documentElement)
       .getPropertyValue("--main-content-width")

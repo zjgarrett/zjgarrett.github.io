@@ -1,12 +1,10 @@
 import Card from "./Card";
-import React, { useEffect, useState } from "react";
-import { useWindowDimensions } from "react-native";
+import React, { useState } from "react";
 
 import "../styles/Card.css";
 
 function CardHolder({ title, description, cards }) {
   const [currentFocus, setFocus] = useState(0); // Index of the card that should be focused, on top
-  let cardComps = [];
 
   function buildCards() {
     const xLeftStepSize = 50 / currentFocus;
@@ -26,7 +24,15 @@ function CardHolder({ title, description, cards }) {
         z = -2 * (i - currentFocus);
         y = (i - currentFocus) * 10;
       }
-      result.push(<Card xPos={x} yPos={y} zPos={z} text={card.text} />);
+      result.push(
+        <Card
+          key={"Card-" + i.toString()}
+          xPos={x}
+          yPos={y}
+          zPos={z}
+          text={card.text}
+        />
+      );
     }
     return result;
   }
