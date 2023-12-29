@@ -1,6 +1,7 @@
 :root {
   --card-width: 300px;
   --card-height: 300px;
+  --card-transition-time: 400ms;
 }
 
 .CardHolder {
@@ -17,6 +18,8 @@
 }
 
 .Card {
+  transition-property: left top z-index transform;
+  transition-duration: var(--card-transition-time);
   position: absolute;
   margin: auto;
   background-color: grey;
