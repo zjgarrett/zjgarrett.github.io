@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import "../styles/Home.css";
 import "../styles/App.css";
@@ -8,14 +8,16 @@ import CONTENT from "../HomeContent.json";
 const SCROLL_DELAY_MS = 200;
 const SCROLL_TIME_MS = 50;
 
-console.log(CONTENT);
-
 function Home(props) {
+  let contentRef = useRef();
   let scrollLocations = [];
   let currentLocation = 0;
+  let currentOffsetY = 0;
   let timeLastScrolled = Date.now();
   let animationId = null;
   let throttel = false;
+  const defaultClass = "Center";
+  let currentClasses = defaultClass;
 
   function moveTo(location) {
     const root = document.getElementById("root");
@@ -23,24 +25,26 @@ function Home(props) {
     let id = animationId;
     clearInterval(id);
 
-    const targetPos = Math.floor(location.offsetTop);
-    let pos = Math.floor(root.scrollTop);
+    const targetPos = Math.floor(location.getBoundingClientRect().top);
+    let pos = currentOffsetY;
+    currentOffsetY = currentOffsetY + targetPos;
 
     // Calculate scroll distance for a delay of 1ms and SCROLL_TIME_MS time to reach destination
-    const distance = Math.abs(targetPos - pos) / SCROLL_TIME_MS;
+    const distance = Math.abs(targetPos) / SCROLL_TIME_MS;
 
     id = setInterval(frame, 1);
     animationId = id;
     function frame() {
       if (
-        Math.floor(pos) === targetPos ||
-        (Math.floor(pos) + distance > targetPos &&
-          Math.floor(pos) < targetPos) ||
-        (Math.floor(pos) - distance < targetPos && Math.floor(pos) > targetPos)
+        Math.floor(pos) === currentOffsetY ||
+        (Math.floor(pos) + distance > currentOffsetY &&
+          Math.floor(pos) < currentOffsetY) ||
+        (Math.floor(pos) - distance < currentClasses &&
+          Math.floor(pos) > targetPos)
       ) {
         clearInterval(id);
       } else {
-        if (pos < targetPos) pos += distance;
+        if (pos < currentOffsetY) pos += distance;
         else pos -= distance;
         root.scrollTo(0, pos);
       }
@@ -49,10 +53,10 @@ function Home(props) {
 
   // Loads the array of scrollLocations
   useEffect(() => {
-    const root = document.getElementById("root");
+    const conatiner = document.getElementById("container");
     const locations = document.getElementsByClassName("ScrollLocation");
 
-    let array = [root];
+    let array = [conatiner];
     for (let item of locations) array.push(item);
 
     scrollLocations = array;
@@ -77,14 +81,22 @@ function Home(props) {
     if (delta > 0) {
       // Scrolling down
       if (currentLocation < scrollLocations.length - 1) {
-        moveTo(scrollLocations[currentLocation + 1]);
         currentLocation = currentLocation + 1;
+        moveTo(scrollLocations[currentLocation]);
+        if (currentLocation === 1) {
+          currentClasses = currentClasses + " backdrop";
+          contentRef.current.className = currentClasses;
+        }
       }
     } else if (delta < 0) {
       // Scrolling up
       if (currentLocation > 0) {
-        moveTo(scrollLocations[currentLocation - 1]);
         currentLocation = currentLocation - 1;
+        moveTo(scrollLocations[currentLocation]);
+        if (currentLocation === 0) {
+          currentClasses = defaultClass;
+          contentRef.current.className = currentClasses;
+        }
       }
     }
   };
@@ -181,7 +193,7 @@ function Home(props) {
   }
 
   return (
-    <div className="Center">
+    <div className={defaultClass} ref={contentRef}>
       <p>{CONTENT.mainDescription}</p>
       <div className="LoadingBar"></div>
       {getScrollLocations()}

@@ -1,5 +1,5 @@
 :root {
-  --main-content-width: 90%;
+  --main-content-width: 80%;
 }
 
 html,
@@ -30,18 +30,30 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1000;
+  z-index: -10000;
 }
 
 #MainContent {
+  position: relative;
   text-align: center;
   justify-content: center;
   height: 100%;
+  z-index: inherit;
 }
 
 .Center {
+  position: relative;
   justify-content: center;
   text-align: center;
+  height: 100%;
+  transition-property: background-color;
+  transition-duration: 500ms;
+  background-color: #00000000;
+  z-index: inherit;
+}
+
+.backdrop {
+  background-color: #61dafb;
 }
 
 .App {
