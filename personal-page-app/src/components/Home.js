@@ -181,9 +181,8 @@ function Home(props) {
 
   function getScrollLocations() {
     return CONTENT.scrollLocations.map((location, index) => (
-      <div className="ScrollLocation">
+      <div className="ScrollLocation" key={"Holder-" + index.toString()}>
         <CardHolder
-          key={"Holder-" + index.toString()}
           title={location.title}
           description={location.description}
           cards={location.cards}
