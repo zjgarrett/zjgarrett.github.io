@@ -11,6 +11,7 @@ function CardHolder({ title, description, cards }) {
   const [currentFocus, setFocus] = useState(0); // Index of the card that should be focused, on top
   const [incrementUp, setDirection] = useState(true); // The direction the automatic focus change will go
   const [allowAuto, setAllowAuto] = useState(true); // If auto changing focus is enabled
+  const [manualChange, setManualChange] = useState(false); // If manual changing the focus is enabled
 
   // Set up the interval to automatically switch the focused Card
   useInterval(
@@ -18,7 +19,7 @@ function CardHolder({ title, description, cards }) {
       let moveUp = incrementUp;
       if (currentFocus === cards.length - 1) moveUp = false;
       else if (currentFocus === 0) moveUp = true;
-      console.log(cards.length, currentFocus, moveUp);
+
       if (moveUp) {
         setFocus((currentFocus) => currentFocus + 1);
       } else {
@@ -94,36 +95,41 @@ function CardHolder({ title, description, cards }) {
   }
   function onExit() {
     setAllowAuto(true);
+    setManualChange(false);
+  }
+
+  // Manually change focused card on click and horizontal movement
+  let movementSum = 0;
+  function manualMove(event) {
+    if (manualChange) {
+      movementSum += event.movementX;
+      if (movementSum >= 200) {
+        if (currentFocus > 0) setFocus(currentFocus - 1);
+      } else if (movementSum < -200) {
+        if (currentFocus < cards.length - 1) setFocus(currentFocus + 1);
+      }
+    }
+  }
+
+  // Enable/disable the above event listener
+  function enableScrollingCards() {
+    setManualChange(true);
+  }
+  function disableScrollingCards() {
+    setManualChange(false);
   }
 
   return (
-    <div className="CardHolder" onMouseEnter={onEnter} onMouseLeave={onExit}>
+    <div
+      className="CardHolder"
+      onMouseEnter={onEnter}
+      onMouseLeave={onExit}
+      onMouseDown={enableScrollingCards}
+      onMouseUp={disableScrollingCards}
+      onMouseMove={manualMove}
+    >
       <h2>{title}</h2>
       <p>{description}</p>
-      <div
-        className="col"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          marginRight: "auto",
-          marginLeft: "auto",
-        }}
-      >
-        <button
-          onClick={() => {
-            setFocus(currentFocus - 1);
-          }}
-        >
-          Move focus left
-        </button>
-        <button
-          onClick={() => {
-            setFocus(currentFocus + 1);
-          }}
-        >
-          Move focus right
-        </button>
-      </div>
       <div className="CardScroller">{buildCards()}</div>
     </div>
   );
