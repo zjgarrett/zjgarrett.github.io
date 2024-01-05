@@ -5,7 +5,7 @@ import { useInterval } from "../utils/useInterval";
 
 import "../styles/Card.css";
 
-const AUTO_ROTATE_MS = 2000;
+const AUTO_ROTATE_MS = 8000;
 
 function CardHolder({ title, description, cards }) {
   const [currentFocus, setFocus] = useState(0); // Index of the card that should be focused, on top
@@ -42,14 +42,14 @@ function CardHolder({ title, description, cards }) {
       // Calculate the positioning information
       let x = 50;
       let y = 0;
-      let z = 0;
+      let z = 100;
       if (i < currentFocus) {
         x = xLeftStepSize * i;
         y = (currentFocus - i) * 10;
-        z = -2 * (currentFocus - i) - 1;
+        z = 100 - 2 * (currentFocus - i) - 1;
       } else if (i > currentFocus) {
         x = 50 + xRightStepSize * (i - currentFocus);
-        z = -2 * (i - currentFocus);
+        z = 100 - 2 * (i - currentFocus);
         y = (i - currentFocus) * 10;
       }
 
@@ -83,6 +83,12 @@ function CardHolder({ title, description, cards }) {
           yPos={y}
           zPos={z}
           innerComp={innerComp}
+          onClick={() => {
+            let newFocus = i;
+            if (currentFocus > i) newFocus = currentFocus - 1;
+            else if (currentFocus < i) newFocus = currentFocus + 1;
+            setFocus(newFocus);
+          }}
         />
       );
     }

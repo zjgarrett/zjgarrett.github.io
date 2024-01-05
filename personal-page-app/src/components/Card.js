@@ -3,7 +3,7 @@ import { useWindowDimensions } from "react-native";
 
 import "../styles/Card.css";
 
-export function Card({ xPos, yPos, zPos, innerComp }) {
+export function Card({ xPos, yPos, zPos, innerComp, onClick }) {
   const cardWidth = getComputedStyle(document.documentElement)
     .getPropertyValue("--card-width")
     .replace(/[^0-9]/gi, "");
@@ -16,8 +16,8 @@ export function Card({ xPos, yPos, zPos, innerComp }) {
     width;
 
   function calculateDimensions() {
-    const scale = 1 - 0.05 * Math.floor(Math.abs(zPos / 2));
-    const blur = 2 * Math.floor(Math.abs(zPos / 2));
+    const scale = 1 - 0.05 * Math.floor(Math.abs((zPos - 100) / 2));
+    const blur = 2 * Math.floor(Math.abs((zPos - 100) / 2));
     const pos = (xPos / 100) * (scrollerWidth - cardWidth);
     return {
       left: pos.toString() + "px",
@@ -31,7 +31,7 @@ export function Card({ xPos, yPos, zPos, innerComp }) {
   const style = calculateDimensions();
 
   return (
-    <div className="Card" style={style}>
+    <div className="Card" style={style} onClick={onClick}>
       {innerComp}
     </div>
   );
