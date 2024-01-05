@@ -1,6 +1,6 @@
 :root {
-  --card-width: 300px;
-  --card-height: 300px;
+  --card-width: 500px;
+  --card-height: 350px;
   --card-transition-time: 400ms;
 }
 
@@ -27,4 +27,10 @@
   border-radius: 10px;
   width: var(--card-width);
   height: var(--card-height);
+}
+
+@media only screen and (max-width: 800px) {
+  :root {
+    --card-width: 300px;
+  }
 }

@@ -38,20 +38,34 @@ export function Card({ xPos, yPos, zPos, innerComp }) {
 }
 
 export function JobCard({ company, title, description, skills, urls }) {
+  function buildSkillsText() {
+    return skills.join(" - ");
+  }
+
   return (
     <div>
       <h2>{company}</h2>
       <h3>{title}</h3>
       <p>{description}</p>
+      <p>
+        <b>Skills:</b> {buildSkillsText()}
+      </p>
     </div>
   );
 }
 
 export function ProjectCard({ title, description, skills, urls }) {
+  function buildSkillsText() {
+    return skills.join(" - ");
+  }
+
   return (
     <div>
       <h2>{title}</h2>
       <p>{description}</p>
+      <p>
+        <b>Skills:</b> {buildSkillsText()}
+      </p>
     </div>
   );
 }
