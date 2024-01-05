@@ -4,8 +4,19 @@ import { useWindowDimensions } from "react-native";
 import "../styles/Card.css";
 
 export function Card({ xPos, yPos, zPos, innerComp, onClick }) {
-  const cardWidth = getComputedStyle(document.documentElement)
-    .getPropertyValue("--card-width")
+  const cardWidth =
+    Number(
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--card-width")
+        .replace(/[^0-9]/gi, "")
+    ) +
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--card-border-width")
+      .replace(/[^0-9]/gi, "") *
+      16;
+  console.log(cardWidth);
+  const contentPadding = getComputedStyle(document.documentElement)
+    .getPropertyValue("--main-content-padding")
     .replace(/[^0-9]/gi, "");
   const { width } = useWindowDimensions();
   const scrollerWidth =
@@ -13,7 +24,8 @@ export function Card({ xPos, yPos, zPos, innerComp, onClick }) {
       .getPropertyValue("--main-content-width")
       .replace(/[^0-9]/gi, "") /
       100) *
-    width;
+      width -
+    contentPadding * 2;
 
   function calculateDimensions() {
     const scale = 1 - 0.05 * Math.floor(Math.abs((zPos - 100) / 2));
@@ -31,7 +43,7 @@ export function Card({ xPos, yPos, zPos, innerComp, onClick }) {
   const style = calculateDimensions();
 
   return (
-    <div className="Card" style={style} onClick={onClick}>
+    <div className="Card popped" style={style} onClick={onClick}>
       {innerComp}
     </div>
   );
@@ -61,7 +73,11 @@ export function ProjectCard({ title, description, skills, urls }) {
 
   return (
     <div>
-      <h2>{title}</h2>
+      <h2>
+        <a href={urls[0]} target="_blank">
+          {title}
+        </a>
+      </h2>
       <p>{description}</p>
       <p>
         <b>Skills:</b> {buildSkillsText()}

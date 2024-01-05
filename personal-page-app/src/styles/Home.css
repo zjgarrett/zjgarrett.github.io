@@ -1,3 +1,7 @@
+:root {
+  --scroll-location-height: 60vh;
+}
+
 .LoadingBar {
   width: 60%;
   height: 5px;
@@ -11,8 +15,8 @@
 
 .ScrollLocation {
   display: flex;
-  height: 80vh;
-  width: 100%;
+  height: var(--scroll-location-height);
+  margin-top: 30px;
 }
 
 .ScrollLocation > * {

@@ -19,7 +19,7 @@ function App() {
         root.scrollTop || document.documentElement.scrollTop;
       const maxDistance = root.scrollHeight - root.clientHeight;
       const percentScrolled = Math.min(
-        Math.log2(1 + (4 * scrollDistance) / maxDistance),
+        Math.log2(1 + (7.4 * scrollDistance) / maxDistance),
         1
       );
 
@@ -27,9 +27,8 @@ function App() {
       const secondHeight = Math.max(percentNotScrolled, 0.1);
 
       const grd = ctx.createLinearGradient(0, 0, 0, c.height);
-      grd.addColorStop(0, "#61dafb");
-      grd.addColorStop(1 * secondHeight, "#d9e8ff");
-      grd.addColorStop(1, "white");
+      grd.addColorStop(1 * secondHeight, "#374788ff");
+      grd.addColorStop(1, "#ea6d1dff");
 
       // Fill with gradient
       ctx.fillStyle = grd;
