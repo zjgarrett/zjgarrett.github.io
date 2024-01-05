@@ -30,8 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "cd ./personal-page-app/ && npm run build",
-    "deploy": "gh-pages -d ./personal-page-app/build -b main -m 'Building and deploying React'"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d ./build -b gh-pages -m Build_and_deploy_React_app"
   },
   "eslintConfig": {
     "extends": [
