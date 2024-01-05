@@ -40,10 +40,12 @@ function Header(props) {
   return (
     <div className={"HeaderLayout"}>
       <div className={"HeaderFlex"}>
-        <h1 onClick={toggleSidebar}>Zachary Garrett</h1>
-        <div className={"HeaderSidebarButton"} onClick={toggleSidebar}>
+        <h1 className="popped" onClick={toggleSidebar}>
+          Zachary Garrett
+        </h1>
+        {/* <div className={"HeaderSidebarButton"} onClick={toggleSidebar}>
           <DensityMediumIcon />
-        </div>
+        </div> */}
       </div>
       <div id={"SidebarNavigation"} onMouseLeave={toggleSidebar}>
         <div>
