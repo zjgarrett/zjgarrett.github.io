@@ -1,55 +1,82 @@
 {
   "title": "Zachary Garrett",
-  "mainDescription": "This page is still WIP, comeback soon! In the meantime, please be pleasantly distracted by this animated bar.",
+  "mainDescription": "I am a recent graduate from Michigan State Univeristy where I received a Bachelors of Science in Computer Science. Below is more information on my experience and interests.",
   "scrollLocations": [
     {
       "type": "CardHolder",
       "title": "Work Experience",
-      "description": "Recent, relevant work experience.",
+      "description": "Professional work experience",
       "cards": [
         {
           "type": "JobCard",
           "urls": [],
           "company": "LG Electronics",
           "title": "Development Engineering Intern",
-          "description": "INSERT JOB DESCRIPTION HERE",
-          "skills": []
+          "description": "Designed and developed an automotive infotainment application following LGE’s software development guidelines. \nValidation of vehicle infotainment systems including Apple CarPlay. \nPresented LGE's technologies to top Auto OEM engineers and designers.",
+          "skills": [
+            "Self Actualization",
+            "Communication",
+            "Software Design",
+            "Presentation",
+            "Kotlin"
+          ]
         },
         {
           "type": "JobCard",
           "urls": [],
           "company": "Michigan State Univeristy",
           "title": "Undergraduate Learning Assistant",
-          "description": "INSERT JOB DESCRIPTION HERE",
-          "skills": []
+          "description": "Taught introductory programming concepts, algorithmic thinking, and Python. \nWorked with professors to identify problem areas in course materials and student learning",
+          "skills": [
+            "Presentation",
+            "Communication",
+            "Problem Solving",
+            "Python"
+          ]
         }
       ]
     },
     {
       "type": "CardHolder",
       "title": "Projects",
-      "description": "Recent, relevant projects.",
+      "description": "Personal and collaborative projects",
       "cards": [
         {
           "type": "ProjectCard",
-          "urls": [],
+          "urls": ["https://github.com/Ooglely/pugBot"],
           "title": "PugBot",
-          "description": "INSERT PROJECT DESCRIPTION HERE",
-          "skills": []
+          "description": "Open-source Discord bot for organizing online pickup games for thousands of users. I have added multiple features, from improving player registration, game administration systems, and improving the user experience.",
+          "skills": [
+            "Team Collaboration",
+            "Version Control",
+            "Python",
+            "MongoDB"
+          ]
         },
         {
           "type": "ProjectCard",
           "urls": [],
           "title": "Task Tracking App",
-          "description": "INSERT PROJECT DESCRIPTION HERE",
-          "skills": []
+          "description": "A WIP Andriod application. Users can set daily, weekly, and monthly goals they want to meet or habits they would like to build.",
+          "skills": [
+            "Mobile App Developement",
+            "Kotlin",
+            "SQLite/Room",
+            "Jetpack Compose"
+          ]
         },
         {
           "type": "ProjectCard",
-          "urls": [],
-          "title": "This Web App!",
-          "description": "INSERT PROJECT DESCRIPTION HERE",
-          "skills": []
+          "urls": ["https://github.com/zjgarrett/zjgarrett.github.io"],
+          "title": "This Web Page!",
+          "description": "My portfolio site, built by me... You are currently looking at it.",
+          "skills": [
+            "Web App Development",
+            "JavaScript",
+            "React",
+            "HTML",
+            "CSS"
+          ]
         }
       ]
     }
