@@ -7,6 +7,7 @@ import CardHolder from "./CardHolder";
 import CONTENT from "../HomeContent.json";
 const SCROLL_DELAY_MS = 200;
 const SCROLL_TIME_MS = 50;
+const SCROLL_TREASHOLD = 100;
 
 function Home(props) {
   let contentRef = useRef();
@@ -108,23 +109,42 @@ function Home(props) {
   const upKeys = { 38: 1, 33: 1, 36: 1 };
   // const downKeys = { 40: 1, 32: 1, 34: 1, 35: 1 };
 
+  let touchLast = null;
+  let movementTotal = 0;
   function preventDefault(e) {
+    e.preventDefault();
+
     if (!throttel) {
       // event throtteling
-      throttel = true;
-
       // Determine scroll direction, attempt to scroll
       var delta = 0;
       if (e.wheelDelta) delta = -e.wheelDelta;
       else if (e.detail) delta = e.detail;
       else if (e.type === "keydown") {
-        if (upKeys[e.keyCode]) delta = -5;
-        else delta = 5;
+        if (upKeys[e.keyCode]) delta = -100;
+        else delta = 100;
+      } else {
+        if (!touchLast) touchLast = e.changedTouches[0].clientY;
+        else {
+          delta = touchLast - e.changedTouches[0].clientY;
+          touchLast = e.changedTouches[0].clientY;
+        }
       }
-      handleScroll(delta);
-    }
 
-    e.preventDefault();
+      movementTotal += delta;
+      console.log(movementTotal);
+      if (Math.abs(movementTotal) >= SCROLL_TREASHOLD) {
+        touchLast = null;
+        throttel = true;
+        handleScroll(movementTotal);
+        movementTotal = 0;
+      }
+    }
+  }
+
+  // Clears last location of touch scroll tracker
+  function clearTouchLast(e) {
+    touchLast = null;
   }
 
   function preventDefaultForScrollKeys(e) {
@@ -157,6 +177,7 @@ function Home(props) {
     window.addEventListener("DOMMouseScroll", preventDefault, false); // older FF
     window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
     window.addEventListener("touchmove", preventDefault, wheelOpt); // mobile
+    window.addEventListener("touchend", clearTouchLast, wheelOpt); // clear last location on end of touch
     window.addEventListener("keydown", preventDefaultForScrollKeys, false);
   }
 
@@ -165,6 +186,7 @@ function Home(props) {
     window.removeEventListener("DOMMouseScroll", preventDefault, false);
     window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
     window.removeEventListener("touchmove", preventDefault, wheelOpt);
+    window.removeEventListener("touchend", clearTouchLast, wheelOpt);
     window.removeEventListener("keydown", preventDefaultForScrollKeys, false);
   }
 
