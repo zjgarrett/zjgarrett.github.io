@@ -14,7 +14,6 @@ export function Card({ xPos, yPos, zPos, innerComp, onClick }) {
       .getPropertyValue("--card-border-width")
       .replace(/[^0-9]/gi, "") *
       16;
-  console.log(cardWidth);
   const contentPadding = getComputedStyle(document.documentElement)
     .getPropertyValue("--main-content-padding")
     .replace(/[^0-9]/gi, "");

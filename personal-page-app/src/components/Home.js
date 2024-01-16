@@ -132,7 +132,6 @@ function Home(props) {
       }
 
       movementTotal += delta;
-      console.log(movementTotal);
       if (Math.abs(movementTotal) >= SCROLL_TREASHOLD) {
         touchLast = null;
         throttel = true;
