@@ -5,6 +5,7 @@ import "../styles/App.css";
 import CardHolder from "./CardHolder";
 
 import CONTENT from "../HomeContent.json";
+import Header from "./Header";
 const SCROLL_DELAY_MS = 200;
 const SCROLL_TIME_MS = 50;
 const SCROLL_TREASHOLD = 100;
@@ -202,7 +203,7 @@ function Home(props) {
 
   function getScrollLocations() {
     return CONTENT.scrollLocations.map((location, index) => (
-      <div className="ScrollLocation popped" key={"Holder-" + index.toString()}>
+      <div className="ScrollLocation" key={"Holder-" + index.toString()}>
         <CardHolder
           title={location.title}
           description={location.description}
@@ -214,7 +215,8 @@ function Home(props) {
 
   return (
     <div className={defaultClass} ref={contentRef}>
-      <p className="popped">{CONTENT.mainDescription}</p>
+      <Header />
+      <h3 className="">{CONTENT.mainDescription}</h3>
       {/* <div className="LoadingBar"></div> */}
       {getScrollLocations()}
     </div>

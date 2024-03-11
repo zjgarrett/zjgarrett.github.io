@@ -135,7 +135,7 @@ function CardHolder({ title, description, cards }) {
       onMouseMove={manualMove}
     >
       <h2>{title}</h2>
-      <p>{description}</p>
+      <h3>{description}</h3>
       <div className="CardScroller">{buildCards()}</div>
     </div>
   );

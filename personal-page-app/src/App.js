@@ -27,7 +27,7 @@ function App() {
       const secondHeight = Math.max(percentNotScrolled, 0.1);
 
       const grd = ctx.createLinearGradient(0, 0, 0, c.height);
-      grd.addColorStop(1 * secondHeight, "#374788ff");
+      grd.addColorStop(1 * secondHeight, "#e5e5e5ff");
       grd.addColorStop(1, "#ea6d1dff");
 
       // Fill with gradient
@@ -50,7 +50,6 @@ function App() {
     <Router>
       <canvas ref={canvasRef} id="background" width="100" height="100"></canvas>
       <div id="container">
-        <Header />
         <div id="MainContent">
           <Routes>
             <Route element={<Home />} path="" />

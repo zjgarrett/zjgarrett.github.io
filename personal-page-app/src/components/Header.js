@@ -40,7 +40,7 @@ function Header(props) {
   return (
     <div className={"HeaderLayout"}>
       <div className={"HeaderFlex"}>
-        <h1 className="popped" onClick={toggleSidebar}>
+        <h1 className="" onClick={toggleSidebar}>
           Zachary Garrett
         </h1>
         {/* <div className={"HeaderSidebarButton"} onClick={toggleSidebar}>
