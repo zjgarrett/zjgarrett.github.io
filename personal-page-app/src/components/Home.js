@@ -6,9 +6,9 @@ import CardHolder from "./CardHolder";
 
 import CONTENT from "../HomeContent.json";
 import Header from "./Header";
-const SCROLL_DELAY_MS = 200;
-const SCROLL_TIME_MS = 50;
-const SCROLL_TREASHOLD = 100;
+const SCROLL_DELAY_MS = 225;
+const SCROLL_TIME_MS = 20;
+const SCROLL_TREASHOLD = 350;
 
 function Home(props) {
   let contentRef = useRef();
@@ -122,8 +122,8 @@ function Home(props) {
       if (e.wheelDelta) delta = -e.wheelDelta;
       else if (e.detail) delta = e.detail;
       else if (e.type === "keydown") {
-        if (upKeys[e.keyCode]) delta = -100;
-        else delta = 100;
+        if (upKeys[e.keyCode]) delta = -1000;
+        else delta = 1000;
       } else {
         if (!touchLast) touchLast = e.changedTouches[0].clientY;
         else {
@@ -132,6 +132,10 @@ function Home(props) {
         }
       }
 
+      // Gaurd against annoying touchpad (and possibly mobile) scrolling
+      if (Math.abs(delta) < 25) {
+        delta = 0
+      } 
       movementTotal += delta;
       if (Math.abs(movementTotal) >= SCROLL_TREASHOLD) {
         touchLast = null;
