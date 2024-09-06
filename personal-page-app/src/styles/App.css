@@ -43,7 +43,7 @@ h3 {
   max-width: var(--main-content-width);
   margin: auto;
   z-index: 0;
-  height: 300vh;
+  height: 1000%;
 }
 
 #background {
