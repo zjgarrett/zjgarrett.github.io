@@ -206,15 +206,22 @@ function Home(props) {
   });
 
   function getScrollLocations() {
-    return CONTENT.scrollLocations.map((location, index) => (
-      <div className="ScrollLocation" key={"Holder-" + index.toString()}>
-        <CardHolder
-          title={location.title}
-          description={location.description}
-          cards={location.cards}
-        />
-      </div>
-    ));
+    return CONTENT.scrollLocations.map((location, index) => {
+      let innerComp;
+      if (location.type === "CardHolder") {
+        innerComp =           
+          <CardHolder
+            title={location.title}
+            description={location.description}
+            cards={location.cards}
+          />
+      } 
+      return (
+        <div className="ScrollLocation" key={"Holder-" + index.toString()}>
+          {innerComp}
+        </div>
+      )
+  });
   }
 
   return (
